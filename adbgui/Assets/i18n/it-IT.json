@@ -1,5 +1,7 @@
 {
   "Ok": "Ok",
   "RefreshDeviceList": "Aggiorna",
-  "SelectDevice": "Seleziona il device che vuoi gestire"
+  "SelectDevice": "Seleziona il device che vuoi gestire",
+
+  "Title_DeviceSelect": "Selezione device"
 }

@@ -34,4 +34,10 @@
       <Folder Include="Dialogs\" />
       <Folder Include="Models\" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Controls\TitleBar.axaml.cs">
+        <DependentUpon>TitleBar.axaml</DependentUpon>
+      </Compile>
+    </ItemGroup>
 </Project>

@@ -11,7 +11,15 @@ public partial class MainWindow : MainWindowBase
     {
         InitializeComponent();
 
+        if (Environment.OSVersion.Platform == PlatformID.Win32NT) {
+            ExtendClientAreaToDecorationsHint = true;
+            ExtendClientAreaTitleBarHeightHint = -1;
+            ExtendClientAreaChromeHints = Avalonia.Platform.ExtendClientAreaChromeHints.NoChrome;
+        }
+
         WindowTitle = $"adbGUI - v{Assembly.GetExecutingAssembly().GetName().Version!.ToString()}";
+
+        WindowTitle = "adb GUI";
         Container = ContainerGrid;
         Localizer.Localizer.Instance.LoadLanguage("en-US");
         Adb.Adb.Instance = new Adb.Adb(@"c:\Users\paolo.iommarini\Downloads\ADB\adb.exe");
@@ -21,5 +29,10 @@ public partial class MainWindow : MainWindowBase
     {
         base.OnOpened(e);
         await NavigateTo(new DeviceSelect());
+    }
+
+    protected override void PageChanged()
+    {
+        TitleBar.CanGoBack = CanNavigateBack;
     }
 }

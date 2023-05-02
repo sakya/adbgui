@@ -29,7 +29,13 @@
                  SelectionChanged="OnListSelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Id}" />
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="{Binding Id}" TextTrimming="CharacterEllipsis" />
+                        <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" FontWeight="ExtraLight"
+                                   Margin="0,10,0,0"/>
+                        <TextBlock Text="{Binding Model}" TextTrimming="CharacterEllipsis" FontWeight="ExtraLight"
+                                   Margin="0,3,0,0"/>
+                    </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

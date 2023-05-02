@@ -27,12 +27,14 @@ public partial class DeviceSelect : BasePage
 
     private void OnListSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
-        OkBtn.IsEnabled = List.SelectedItems.Count > 0;
+        var dev = List.SelectedItems.Count > 0 ? List.SelectedItems[0] as Device : null;
+        OkBtn.IsEnabled = dev?.Authorized == true;
     }
 
     private async void OnOkClick(object? sender, RoutedEventArgs e)
     {
         var dev = List.SelectedItems[0] as Device;
-        await MainWindowBase.Instance.NavigateTo(new MainPage(dev));
+        if (dev != null && dev.Authorized)
+            await MainWindowBase.Instance.NavigateTo(new MainPage(dev));
     }
 }

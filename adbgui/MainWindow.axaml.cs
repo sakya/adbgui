@@ -18,10 +18,9 @@ public partial class MainWindow : MainWindowBase
         }
 
         WindowTitle = $"adbGUI - v{Assembly.GetExecutingAssembly().GetName().Version!.ToString()}";
-
-        WindowTitle = "adb GUI";
         Container = ContainerGrid;
-        Localizer.Localizer.Instance.LoadLanguage("en-US");
+        Localizer.Localizer.Instance.LoadLanguage(App.Settings.Language);
+
         //Adb.Adb.Instance = new Adb.Adb(@"c:\Users\paolo.iommarini\Downloads\ADB\adb.exe");
         Adb.Adb.Instance = new Adb.Adb("/home/sakya/Downloads/platform-tools/adb");
     }

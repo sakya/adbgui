@@ -3,5 +3,6 @@
   "RefreshDeviceList": "Refresh",
   "SelectDevice": "Select the device you want to manage",
 
-  "Title_DeviceSelect": "Device select"
+  "Title_DeviceSelect": "Device select",
+  "Title_Settings": "Settings"
 }

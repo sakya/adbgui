@@ -10,5 +10,7 @@ public partial class Settings : BasePage
     public Settings()
     {
         InitializeComponent();
+
+        PageTitle = Localizer.Localizer.Instance["Title_Settings"];
     }
 }

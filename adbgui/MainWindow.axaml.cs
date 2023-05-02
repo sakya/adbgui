@@ -22,7 +22,8 @@ public partial class MainWindow : MainWindowBase
         WindowTitle = "adb GUI";
         Container = ContainerGrid;
         Localizer.Localizer.Instance.LoadLanguage("en-US");
-        Adb.Adb.Instance = new Adb.Adb(@"c:\Users\paolo.iommarini\Downloads\ADB\adb.exe");
+        //Adb.Adb.Instance = new Adb.Adb(@"c:\Users\paolo.iommarini\Downloads\ADB\adb.exe");
+        Adb.Adb.Instance = new Adb.Adb("/home/sakya/Downloads/platform-tools/adb");
     }
 
     protected override async void OnOpened(EventArgs e)

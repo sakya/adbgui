@@ -32,7 +32,6 @@
       <Folder Include="Assets\" />
       <Folder Include="Controls\" />
       <Folder Include="Dialogs\" />
-      <Folder Include="Models\" />
     </ItemGroup>
 
     <ItemGroup>

@@ -17,9 +17,12 @@ public partial class DeviceSelect : BasePage
 
     private async void OnRefreshClick(object? sender, RoutedEventArgs e)
     {
+        RefreshBtn.IsEnabled = false;
         List.Items = null;
+        OkBtn.IsEnabled = false;
         var devices = await Adb.Adb.Instance!.ListDevices();
         List.Items = devices;
+        RefreshBtn.IsEnabled = true;
     }
 
     private void OnListSelectionChanged(object? sender, SelectionChangedEventArgs e)

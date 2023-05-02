@@ -21,6 +21,7 @@
                 HorizontalAlignment="Center"
                 Margin="0,15,0,0"
                 Classes="Accent"
+                Name="RefreshBtn"
                 Click="OnRefreshClick"/>
 
         <ListBox Name="List" Grid.Row="2"
@@ -35,6 +36,7 @@
 
         <Button Grid.Row="3" Name="OkBtn"
                 HorizontalAlignment="Stretch"
+                IsEnabled="False"
                 Click="OnOkClick">
             <TextBlock Text="{i18n:Localize Ok}"
                        HorizontalAlignment="Center"/>

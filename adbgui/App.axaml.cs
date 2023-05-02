@@ -6,9 +6,9 @@ using Avalonia.Markup.Xaml;
 
 namespace adbgui;
 
-public partial class App : Application
+public class App : Application
 {
-    public static Settings Settings { get; set; } = new Settings();
+    public static Settings Settings { get; set; } = new();
 
     public override void Initialize()
     {
@@ -20,9 +20,8 @@ public partial class App : Application
         if (settings == null) {
             settings = new Settings();
             settings.Save();
-        } else {
-            Settings = settings;
         }
+        Settings = settings;
     }
 
     public override void OnFrameworkInitializationCompleted()

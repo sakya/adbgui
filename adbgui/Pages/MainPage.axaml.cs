@@ -8,8 +8,6 @@ public partial class MainPage : BasePage
     public MainPage()
     {
         InitializeComponent();
-
-        Adb.Adb.Instance = new Adb.Adb(@"c:\Users\paolo.iommarini\Downloads\ADB\adb.exe");
     }
 
     private async void Button_OnClick(object? sender, RoutedEventArgs e)

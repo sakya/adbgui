@@ -14,6 +14,7 @@ public partial class MainWindow : MainWindowBase
         WindowTitle = $"adbGUI - v{Assembly.GetExecutingAssembly().GetName().Version!.ToString()}";
         Container = ContainerGrid;
         Localizer.Localizer.Instance.LoadLanguage("en-US");
+        Adb.Adb.Instance = new Adb.Adb(@"c:\Users\paolo.iommarini\Downloads\ADB\adb.exe");
     }
 
     protected override async void OnOpened(EventArgs e)

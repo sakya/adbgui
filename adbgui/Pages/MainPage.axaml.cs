@@ -1,5 +1,4 @@
 ﻿using Avalonia.Interactivity;
-using Avalonia.Markup.Xaml;
 using Avalonia.SingleWindow.Abstracts;
 
 namespace adbgui.Pages;
@@ -11,11 +10,6 @@ public partial class MainPage : BasePage
         InitializeComponent();
 
         Adb.Adb.Instance = new Adb.Adb(@"c:\Users\paolo.iommarini\Downloads\ADB\adb.exe");
-    }
-
-    private void InitializeComponent()
-    {
-        AvaloniaXamlLoader.Load(this);
     }
 
     private async void Button_OnClick(object? sender, RoutedEventArgs e)

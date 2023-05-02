@@ -13,11 +13,12 @@ public partial class MainWindow : MainWindowBase
 
         WindowTitle = $"adbGUI - v{Assembly.GetExecutingAssembly().GetName().Version!.ToString()}";
         Container = ContainerGrid;
+        Localizer.Localizer.Instance.LoadLanguage("en-US");
     }
 
     protected override async void OnOpened(EventArgs e)
     {
         base.OnOpened(e);
-        await NavigateTo(new MainPage());
+        await NavigateTo(new DeviceSelect());
     }
 }

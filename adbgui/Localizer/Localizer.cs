@@ -18,7 +18,7 @@ public class Localizer : INotifyPropertyChanged
     public bool LoadLanguage(string language)
     {
         var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
-        Uri uri = new Uri($"avares://CoreChess/Assets/i18n/{language}.json");
+        Uri uri = new Uri($"avares://adbgui/Assets/i18n/{language}.json");
         if (assets?.Exists(uri) == true) {
             using (StreamReader sr = new StreamReader(assets.Open(uri), Encoding.UTF8)) {
                 _strings = JsonConvert.DeserializeObject<Dictionary<string, string>>(sr.ReadToEnd());

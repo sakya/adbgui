@@ -1,4 +1,5 @@
 using System.IO;
+using adbgui.Adb.Models;
 using adbgui.Models;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -9,6 +10,7 @@ namespace adbgui;
 public class App : Application
 {
     public static Settings Settings { get; set; } = new();
+    public static Device? SelectedDevice { get; set; }
 
     public override void Initialize()
     {

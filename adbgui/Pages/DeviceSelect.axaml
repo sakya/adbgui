@@ -5,9 +5,10 @@
              xmlns:i18n="clr-namespace:adbgui.Localizer"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="adbgui.Pages.DeviceSelect">
-    <Grid HorizontalAlignment="Center"
-          VerticalAlignment="Center"
-          MinHeight="300">
+    <Border Classes="rounded"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+        <Grid MinHeight="300">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -48,4 +49,5 @@
                        HorizontalAlignment="Center"/>
         </Button>
     </Grid>
+    </Border>
 </UserControl>

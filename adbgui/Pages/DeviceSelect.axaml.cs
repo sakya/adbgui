@@ -1,4 +1,5 @@
-﻿using adbgui.Adb.Models;
+﻿using System.Threading.Tasks;
+using adbgui.Adb.Models;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.SingleWindow;
@@ -13,6 +14,19 @@ public partial class DeviceSelect : BasePage
         InitializeComponent();
 
         PageTitle = Localizer.Localizer.Instance["Title_DeviceSelect"];
+    }
+
+    public override void OnNavigatedTo(NavigationDirection direction)
+    {
+        base.OnNavigatedTo(direction);
+        App.SelectedDevice = null;
+        OnRefreshClick(null, new RoutedEventArgs());
+    }
+
+    public override Task<bool> OnNavigatingFrom(NavigationDirection direction)
+    {
+        List.Items = null;
+        return Task.FromResult(true);
     }
 
     private async void OnRefreshClick(object? sender, RoutedEventArgs e)
@@ -34,7 +48,9 @@ public partial class DeviceSelect : BasePage
     private async void OnOkClick(object? sender, RoutedEventArgs e)
     {
         var dev = List.SelectedItems[0] as Device;
-        if (dev != null && dev.Authorized)
+        if (dev != null && dev.Authorized) {
+            App.SelectedDevice = dev;
             await MainWindowBase.Instance.NavigateTo(new MainPage(dev));
+        }
     }
 }

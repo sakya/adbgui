@@ -1,5 +1,6 @@
 ﻿using adbgui.Adb.Models;
 using Avalonia.Interactivity;
+using Avalonia.SingleWindow;
 using Avalonia.SingleWindow.Abstracts;
 
 namespace adbgui.Pages;
@@ -19,10 +20,13 @@ public partial class MainPage : BasePage
         _device = dev;
     }
 
-    private async void Button_OnClick(object? sender, RoutedEventArgs e)
+    private async void OnPackagaManagerClick(object? sender, RoutedEventArgs e)
     {
-        if (_device != null) {
-            await Adb.Adb.Instance!.ListPackages(_device.Id);
-        }
+        await MainWindowBase.Instance.NavigateTo(new PackageManager());
+    }
+
+    private async void OnFileManagerClick(object? sender, RoutedEventArgs e)
+    {
+        await MainWindowBase.Instance.NavigateTo(new FileManager());
     }
 }

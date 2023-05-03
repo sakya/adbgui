@@ -2,9 +2,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:i="clr-namespace:Projektanker.Icons.Avalonia;assembly=Projektanker.Icons.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="adbgui.Pages.MainPage">
-    <Grid>
-        <Button Click="Button_OnClick">Test</Button>
-    </Grid>
+    <StackPanel Orientation="Vertical">
+        <Button HorizontalAlignment="Stretch" Click="OnPackagaManagerClick">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <i:Icon Value="fas fa-cube" Margin="0,0,10,0" />
+                <TextBlock Text="Package manager" />
+            </StackPanel>
+        </Button>
+        <Button HorizontalAlignment="Stretch" Click="OnFileManagerClick"
+                Margin="0,15,0,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <i:Icon Value="fas fa-folder" Margin="0,0,10,0" />
+                <TextBlock Text="File manager"/>
+            </StackPanel>
+        </Button>
+    </StackPanel>
 </UserControl>

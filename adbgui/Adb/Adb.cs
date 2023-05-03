@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using adbgui.Adb.Models;
@@ -19,7 +20,7 @@ public class Adb
 
     public static Adb? Instance = null;
 
-    public Adb(string adbFullPath)
+    public Adb(string? adbFullPath)
     {
         if (string.IsNullOrEmpty(adbFullPath))
             throw new ArgumentNullException(nameof(adbFullPath));
@@ -94,7 +95,49 @@ public class Adb
 
         var res = new List<Package>();
 
-        var cmdRes = await RunCommand($"-s {deviceId} shell cmd package list packages -U -f");
+        var pkgs = await GetPackages($"-s {deviceId} shell cmd package list packages -U -f -d");
+        foreach (var p in pkgs) {
+            p.Enabled = false;
+        }
+        res.AddRange(pkgs);
+
+        pkgs = await GetPackages($"-s {deviceId} shell cmd package list packages -U -f -e");
+        foreach (var p in pkgs) {
+            p.Enabled = true;
+        }
+        res.AddRange(pkgs);
+
+        pkgs = await GetPackages($"-s {deviceId} shell cmd package list packages -U -f -s");
+        foreach (var p in pkgs) {
+            var ep = res.FirstOrDefault(ep => ep.Uid == p.Uid);
+            if (ep != null) {
+                ep.System = true;
+            } else {
+                p.System = true;
+                res.Add(p);
+            }
+        }
+
+        pkgs = await GetPackages($"-s {deviceId} shell cmd package list packages -U -f -3");
+        foreach (var p in pkgs) {
+            var ep = res.FirstOrDefault(ep => ep.Uid == p.Uid);
+            if (ep != null) {
+                ep.ThirdParty = true;
+            } else {
+                p.ThirdParty = true;
+                res.Add(p);
+            }
+        }
+
+        return res;
+    }
+
+    #endregion
+
+    private async Task<List<Package>> GetPackages(string args)
+    {
+        var res = new List<Package>();
+        var cmdRes = await RunCommand(args);
         if (cmdRes.ExitCode == 0 && !string.IsNullOrEmpty(cmdRes.Output)) {
             var lines = cmdRes.Output.Split('\n', StringSplitOptions.RemoveEmptyEntries);
             var regex = new Regex("package:(.*)=(.*) uid:(.*)");
@@ -113,9 +156,6 @@ public class Adb
 
         return res;
     }
-
-    #endregion
-
 
     private async Task<CommandResult> RunCommand(string args)
     {

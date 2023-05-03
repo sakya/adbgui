@@ -24,5 +24,12 @@
                 </Animation>
             </Style.Animations>
         </Style>
+
+        <Style Selector="Border.rounded">
+            <Setter Property="Padding" Value="20" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="BorderBrush" Value="{DynamicResource SystemAccentColor}" />
+            <Setter Property="BorderThickness" Value="0.5" />
+        </Style>
     </Application.Styles>
 </Application>

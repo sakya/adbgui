@@ -9,7 +9,7 @@ public class Settings
     public static readonly string Path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "adbgui");
 
     public string Language { get; set; } = "en-US";
-    public string? AdbFullPath { get; set; }
+    public string AdbFullPath { get; set; } = "adb";
 
     public static Settings? Load()
     {

@@ -2,14 +2,50 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:i="clr-namespace:Projektanker.Icons.Avalonia;assembly=Projektanker.Icons.Avalonia"
+             xmlns:i18n="clr-namespace:adbgui.Localizer"
+             xmlns:converters="clr-namespace:adbgui.Converters"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="adbgui.Pages.PackageManager">
+    <UserControl.Resources>
+        <converters:PackageIconConverter x:Key="PackageIconConverter"/>
+    </UserControl.Resources>
+
     <Grid>
-        <ListBox Name="List">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBox Name="SearchText" KeyDown="OnSearchTextKeyDown"
+                     Watermark="{i18n:Localize Search}"/>
+            <Button Grid.Column="1" MinHeight="32" Name="SearchBtn" Click="OnSearchClick">
+                <i:Icon Value="fas fa-search" />
+            </Button>
+        </Grid>
+        <ListBox Name="List"
+                 Grid.Row="1">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
-                        <TextBlock Text="{Binding Name}" />
+                    <Grid Height="55">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <i:Icon Value="{Binding, Converter={StaticResource PackageIconConverter}}" Margin="0,0,10,0"
+                                FontSize="20"/>
+
+                        <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
+                            <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
+                            <TextBlock Text="{Binding Type}" FontWeight="ExtraLight" TextTrimming="CharacterEllipsis" />
+                        </StackPanel>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

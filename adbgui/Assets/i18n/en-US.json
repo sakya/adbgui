@@ -1,6 +1,9 @@
 {
+  "FileManager": "File manager",
   "Ok": "Ok",
+  "PackageManager": "Package manager",
   "RefreshDeviceList": "Refresh",
+  "Search": "Search",
   "SelectDevice": "Select the device you want to manage",
 
   "Title_DeviceSelect": "Device select",

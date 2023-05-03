@@ -1,6 +1,9 @@
 {
+  "FileManager": "Gestione file",
   "Ok": "Ok",
+  "PackageManager": "Gestione pacchetti",
   "RefreshDeviceList": "Aggiorna",
+  "Search": "Cerca",
   "SelectDevice": "Seleziona il device che vuoi gestire",
 
   "Title_DeviceSelect": "Selezione device",

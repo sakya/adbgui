@@ -113,6 +113,7 @@ public class Adb
             if (ep != null) {
                 ep.System = true;
             } else {
+                p.Enabled = true;
                 p.System = true;
                 res.Add(p);
             }
@@ -124,6 +125,7 @@ public class Adb
             if (ep != null) {
                 ep.ThirdParty = true;
             } else {
+                p.Enabled = true;
                 p.ThirdParty = true;
                 res.Add(p);
             }

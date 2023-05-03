@@ -18,12 +18,14 @@
 
         <TextBlock Text="{i18n:Localize SelectDevice}"
                    HorizontalAlignment="Center"/>
-        <Button Grid.Row="1" Content="{i18n:Localize RefreshDeviceList}"
-                HorizontalAlignment="Center"
+        <Button Grid.Row="1"
+                HorizontalAlignment="Stretch"
                 Margin="0,15,0,0"
                 Classes="Accent"
                 Name="RefreshBtn"
-                Click="OnRefreshClick"/>
+                Click="OnRefreshClick">
+            <TextBlock HorizontalAlignment="Center" Text="{i18n:Localize RefreshDeviceList}"/>
+        </Button>
 
         <ListBox Name="List" Grid.Row="2"
                  Margin="0,15,0,15"

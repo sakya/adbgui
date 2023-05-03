@@ -10,5 +10,7 @@ public partial class FileManager : BasePage
     public FileManager()
     {
         InitializeComponent();
+
+        PageTitle = Localizer.Localizer.Instance["FileManager"];
     }
 }

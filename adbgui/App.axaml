@@ -17,7 +17,7 @@
             <Setter Property="Background" Value="{DynamicResource SystemAccentColor}"/>
         </Style>
         <Style Selector="Button.Accent:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Background" Value="#00569e"/>
+            <Setter Property="Background" Value="#115992"/>
         </Style>
 
         <Style Selector="Button.Danger">

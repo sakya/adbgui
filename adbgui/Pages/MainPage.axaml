@@ -6,19 +6,42 @@
              xmlns:i="clr-namespace:Projektanker.Icons.Avalonia;assembly=Projektanker.Icons.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="adbgui.Pages.MainPage">
-    <StackPanel Orientation="Vertical">
-        <Button HorizontalAlignment="Stretch" Click="OnPackagaManagerClick">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Button Grid.Row="0" HorizontalAlignment="Stretch" Click="OnPackagaManagerClick">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <i:Icon Value="fas fa-cube" Margin="0,0,10,0" />
                 <TextBlock Text="{i18n:Localize PackageManager}" />
             </StackPanel>
         </Button>
-        <Button HorizontalAlignment="Stretch" Click="OnFileManagerClick"
+        <Button Grid.Row="1" HorizontalAlignment="Stretch" Click="OnFileManagerClick"
                 Margin="0,15,0,0">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <i:Icon Value="fas fa-folder" Margin="0,0,10,0" />
                 <TextBlock Text="{i18n:Localize FileManager}"/>
             </StackPanel>
         </Button>
-    </StackPanel>
+        <Button Grid.Row="2" HorizontalAlignment="Stretch" Click="OnOpenTerminalClick"
+                Margin="0,15,0,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <i:Icon Value="fas fa-terminal" Margin="0,0,10,0" />
+                <TextBlock Text="{i18n:Localize OpenTerminal}"/>
+            </StackPanel>
+        </Button>
+
+        <Button Grid.Row="4" HorizontalAlignment="Stretch" Click="OnQuitClick"
+                Classes="Danger" Margin="0,30,0,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <i:Icon Value="fas fa-sign-out-alt" Margin="0,0,10,0" />
+                <TextBlock Text="{i18n:Localize Quit}"/>
+            </StackPanel>
+        </Button>
+    </Grid>
 </UserControl>

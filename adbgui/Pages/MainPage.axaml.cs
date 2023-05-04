@@ -29,4 +29,14 @@ public partial class MainPage : BasePage
     {
         await MainWindowBase.Instance.NavigateTo(new FileManager());
     }
+
+    private void OnOpenTerminalClick(object? sender, RoutedEventArgs e)
+    {
+        Adb.Adb.Instance!.OpenTerminal(App.SelectedDevice!.Id);
+    }
+
+    private void OnQuitClick(object? sender, RoutedEventArgs e)
+    {
+        MainWindowBase.Instance.Close();
+    }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using adbgui.Adb.Models;
@@ -33,6 +34,10 @@ public class Adb
     public string? Version { get; private set; }
 
     #region public operations
+    /// <summary>
+    /// Get ADB version
+    /// </summary>
+    /// <returns></returns>
     public async Task<bool> GetVersion()
     {
         var cmdRes = await RunCommand("version");
@@ -50,6 +55,10 @@ public class Adb
         return false;
     }
 
+    /// <summary>
+    /// Get devices
+    /// </summary>
+    /// <returns></returns>
     public async Task<List<Device>> ListDevices()
     {
         var res = new List<Device>();
@@ -88,6 +97,12 @@ public class Adb
         return res;
     }
 
+    /// <summary>
+    /// List installed packages
+    /// </summary>
+    /// <param name="deviceId">The device id</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
     public async Task<List<Package>> ListPackages(string? deviceId)
     {
         if (string.IsNullOrEmpty(deviceId))
@@ -134,6 +149,20 @@ public class Adb
         return res;
     }
 
+    /// <summary>
+    /// Open a new terminal window
+    /// </summary>
+    /// <param name="deviceId">The device id</param>
+    /// <exception cref="ArgumentNullException"></exception>
+    public void OpenTerminal(string? deviceId)
+    {
+        if (string.IsNullOrEmpty(deviceId))
+            throw new ArgumentNullException(nameof(deviceId));
+
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
+            Process.Start($"cmd", $"/C \"\"{AdbFullPath}\" -s {deviceId} shell\"");
+        }
+    }
     #endregion
 
     private async Task<List<Package>> GetPackages(string args)

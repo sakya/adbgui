@@ -1,7 +1,9 @@
 {
   "FileManager": "File manager",
   "Ok": "Ok",
+  "OpenTerminal": "Open terminal",
   "PackageManager": "Package manager",
+  "Quit": "Quit",
   "RefreshDeviceList": "Refresh",
   "Search": "Search",
   "SelectDevice": "Select the device you want to manage",

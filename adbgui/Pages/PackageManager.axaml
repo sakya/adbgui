@@ -50,11 +50,15 @@
 
             <Button Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch"
                     Margin="0,5,5,0"
+                    Name="DisableBtn"
+                    IsEnabled="False"
                     Click="OnDisableClick">
                 <TextBlock HorizontalAlignment="Center" Text="{i18n:Localize Disable}" />
             </Button>
             <Button Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch"
                     Margin="5,5,5,0"
+                    Name="EnableBtn"
+                    IsEnabled="False"
                     Click="OnEnableClick">
                 <TextBlock HorizontalAlignment="Center" Text="{i18n:Localize Enable}" />
             </Button>

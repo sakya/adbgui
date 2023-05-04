@@ -1,4 +1,6 @@
 ﻿using adbgui.Adb.Models;
+using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Interactivity;
 using Avalonia.SingleWindow;
 using Avalonia.SingleWindow.Abstracts;
@@ -37,6 +39,8 @@ public partial class MainPage : BasePage
 
     private void OnQuitClick(object? sender, RoutedEventArgs e)
     {
-        MainWindowBase.Instance.Close();
+        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop) {
+            desktop.Shutdown();
+        }
     }
 }

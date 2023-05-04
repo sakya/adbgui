@@ -64,6 +64,8 @@ public partial class PackageManager : BasePage
 
     private void OnListSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
+        EnableBtn.IsEnabled = List.SelectedItems?.Count > 0;
+        DisableBtn.IsEnabled = List.SelectedItems?.Count > 0;
         UninstallBtn.IsEnabled = List.SelectedItems?.Count > 0;
     }
 

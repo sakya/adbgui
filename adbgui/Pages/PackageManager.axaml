@@ -45,18 +45,18 @@
 
             <Button Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Stretch"
                     Click="OnInstallBtnClick">
-                <TextBlock HorizontalAlignment="Center" Text="Install APK" />
+                <TextBlock HorizontalAlignment="Center" Text="{i18n:Localize InstallAPK}" />
             </Button>
 
             <Button Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch"
                     Margin="0,5,5,0"
                     Click="OnDisableClick">
-                <TextBlock HorizontalAlignment="Center" Text="Disable" />
+                <TextBlock HorizontalAlignment="Center" Text="{i18n:Localize Disable}" />
             </Button>
             <Button Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch"
                     Margin="5,5,5,0"
                     Click="OnEnableClick">
-                <TextBlock HorizontalAlignment="Center" Text="Enable" />
+                <TextBlock HorizontalAlignment="Center" Text="{i18n:Localize Enable}" />
             </Button>
             <Button Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch"
                     Classes="Danger"
@@ -64,7 +64,7 @@
                     Name="UninstallBtn"
                     IsEnabled="False"
                     Click="OnUninstallBtnClick">
-                <TextBlock HorizontalAlignment="Center" Text="Uninstall" />
+                <TextBlock HorizontalAlignment="Center" Text="{i18n:Localize Uninstall}" />
             </Button>
         </Grid>
 

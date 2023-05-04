@@ -1,6 +1,9 @@
 {
   "Cancel": "Annulla",
+  "Disable": "Disabilita",
+  "Enable": "Abilita",
   "FileManager": "Gestione file",
+  "InstallAPK": "Installa APK",
   "Ok": "Ok",
   "OpenTerminal": "Apri terminale",
   "PackageManager": "Gestione pacchetti",
@@ -10,5 +13,7 @@
   "SelectDevice": "Seleziona il device che vuoi gestire",
 
   "Title_DeviceSelect": "Selezione device",
-  "Title_Settings": "Impostazioni"
+  "Title_Settings": "Impostazioni",
+
+  "Uninstall": "Disinstalla"
 }

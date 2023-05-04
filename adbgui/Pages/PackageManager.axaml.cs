@@ -94,13 +94,48 @@ public partial class PackageManager : BasePage
         if (List.SelectedItems.Count == 0)
             return;
 
-        var dlg = new UninstallPackage();
+        var dlg = new PackageOperations();
         var pkgs = new List<string>();
         foreach (var si in List.SelectedItems) {
             if (si is Package pkg)
                 pkgs.Add(pkg.Name!);
         }
 
+        dlg.Operation = PackageOperations.Operations.Uninstall;
+        dlg.PackageNames = pkgs.ToArray();
+        await dlg.Show();
+    }
+
+    private async void OnDisableClick(object? sender, RoutedEventArgs e)
+    {
+        if (List.SelectedItems.Count == 0)
+            return;
+
+        var dlg = new PackageOperations();
+        var pkgs = new List<string>();
+        foreach (var si in List.SelectedItems) {
+            if (si is Package pkg)
+                pkgs.Add(pkg.Name!);
+        }
+
+        dlg.Operation = PackageOperations.Operations.Disable;
+        dlg.PackageNames = pkgs.ToArray();
+        await dlg.Show();
+    }
+
+    private async void OnEnableClick(object? sender, RoutedEventArgs e)
+    {
+        if (List.SelectedItems.Count == 0)
+            return;
+
+        var dlg = new PackageOperations();
+        var pkgs = new List<string>();
+        foreach (var si in List.SelectedItems) {
+            if (si is Package pkg)
+                pkgs.Add(pkg.Name!);
+        }
+
+        dlg.Operation = PackageOperations.Operations.Enable;
         dlg.PackageNames = pkgs.ToArray();
         await dlg.Show();
     }

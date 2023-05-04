@@ -215,7 +215,7 @@ public class Adb
         if (string.IsNullOrEmpty(deviceId))
             throw new ArgumentNullException(nameof(deviceId));
 
-        var cmdRes = await RunCommand($"-s {deviceId} enable {packageName}");
+        var cmdRes = await RunCommand($"-s {deviceId} shell cmd package enable {packageName}");
 
         return new PackageOperationResult()
         {
@@ -235,12 +235,13 @@ public class Adb
         if (string.IsNullOrEmpty(deviceId))
             throw new ArgumentNullException(nameof(deviceId));
 
-        var cmdRes = await RunCommand($"-s {deviceId} disable {packageName}");
+        var cmdRes = await RunCommand($"-s {deviceId} shell cmd package disable {packageName}");
 
         return new PackageOperationResult()
         {
             Result = cmdRes.ExitCode == 0,
-            Output = cmdRes.Output
+            Output = cmdRes.Output,
+            Error = cmdRes.Error
         };
     }
     #endregion

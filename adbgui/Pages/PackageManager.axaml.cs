@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
 using adbgui.Adb.Models;
+using adbgui.Dialogs;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
@@ -74,14 +75,33 @@ public partial class PackageManager : BasePage
             new()
             {
                 Name = "apk",
-                Extensions = new List<string>() { ".apk" }
+                Extensions = new List<string>() { "apk" }
             }
 
         };
 
         var files = await dlg.ShowAsync(MainWindowBase.Instance);
         if (files?.Length > 0) {
+            var iDlg = new InstallApk();
+            iDlg.ApkFiles = files;
 
+            await iDlg.Show();
         }
+    }
+
+    private async void OnUninstallBtnClick(object? sender, RoutedEventArgs e)
+    {
+        if (List.SelectedItems.Count == 0)
+            return;
+
+        var dlg = new UninstallPackage();
+        var pkgs = new List<string>();
+        foreach (var si in List.SelectedItems) {
+            if (si is Package pkg)
+                pkgs.Add(pkg.Name!);
+        }
+
+        dlg.PackageNames = pkgs.ToArray();
+        await dlg.Show();
     }
 }

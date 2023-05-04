@@ -163,6 +163,86 @@ public class Adb
             Process.Start($"cmd", $"/C \"\"{AdbFullPath}\" -s {deviceId} shell\"");
         }
     }
+
+    /// <summary>
+    /// Install an APK
+    /// </summary>
+    /// <param name="deviceId">The device id</param>
+    /// <param name="apkPath">The path to the APK to install</param>
+    /// <returns></returns>
+    public async Task<PackageOperationResult> InstallApk(string? deviceId, string apkPath)
+    {
+        if (string.IsNullOrEmpty(deviceId))
+            throw new ArgumentNullException(nameof(deviceId));
+
+        var cmdRes = await RunCommand($"-s {deviceId} install -r \"{apkPath}\"");
+
+        return new PackageOperationResult()
+        {
+            Result = cmdRes.ExitCode == 0,
+            Output = cmdRes.Output
+        };
+    }
+
+    /// <summary>
+    /// Uninstall a package
+    /// </summary>
+    /// <param name="deviceId">The device id</param>
+    /// <param name="packageName">The package name to uninstall</param>
+    /// <returns></returns>
+    public async Task<PackageOperationResult> UninstallPackage(string? deviceId, string packageName)
+    {
+        if (string.IsNullOrEmpty(deviceId))
+            throw new ArgumentNullException(nameof(deviceId));
+
+        var cmdRes = await RunCommand($"-s {deviceId} uninstall {packageName}");
+
+        return new PackageOperationResult()
+        {
+            Result = cmdRes.ExitCode == 0,
+            Output = cmdRes.Output
+        };
+    }
+
+    /// <summary>
+    /// Enable a package
+    /// </summary>
+    /// <param name="deviceId">The device id</param>
+    /// <param name="packageName">The package name to enable</param>
+    /// <returns></returns>
+    public async Task<PackageOperationResult> EnablePackage(string? deviceId, string packageName)
+    {
+        if (string.IsNullOrEmpty(deviceId))
+            throw new ArgumentNullException(nameof(deviceId));
+
+        var cmdRes = await RunCommand($"-s {deviceId} enable {packageName}");
+
+        return new PackageOperationResult()
+        {
+            Result = cmdRes.ExitCode == 0,
+            Output = cmdRes.Output
+        };
+    }
+
+    /// <summary>
+    /// Disable a package
+    /// </summary>
+    /// <param name="deviceId">The device id</param>
+    /// <param name="packageName">The package name to disable</param>
+    /// <returns></returns>
+    public async Task<PackageOperationResult> DisablePackage(string? deviceId, string packageName)
+    {
+        if (string.IsNullOrEmpty(deviceId))
+            throw new ArgumentNullException(nameof(deviceId));
+
+        var cmdRes = await RunCommand($"-s {deviceId} disable {packageName}");
+
+        return new PackageOperationResult()
+        {
+            Result = cmdRes.ExitCode == 0,
+            Output = cmdRes.Output
+        };
+    }
     #endregion
 
     private async Task<List<Package>> GetPackages(string args)

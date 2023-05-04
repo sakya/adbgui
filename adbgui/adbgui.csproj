@@ -37,7 +37,6 @@
       <Folder Include="Abstracts\" />
       <Folder Include="Assets\" />
       <Folder Include="Controls\" />
-      <Folder Include="Dialogs\" />
     </ItemGroup>
 
     <ItemGroup>

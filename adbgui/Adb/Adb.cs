@@ -180,7 +180,8 @@ public class Adb
         return new PackageOperationResult()
         {
             Result = cmdRes.ExitCode == 0,
-            Output = cmdRes.Output
+            Output = cmdRes.Output,
+            Error = cmdRes.Error
         };
     }
 
@@ -200,7 +201,8 @@ public class Adb
         return new PackageOperationResult()
         {
             Result = cmdRes.ExitCode == 0,
-            Output = cmdRes.Output
+            Output = cmdRes.Output,
+            Error = cmdRes.Error
         };
     }
 
@@ -220,7 +222,8 @@ public class Adb
         return new PackageOperationResult()
         {
             Result = cmdRes.ExitCode == 0,
-            Output = cmdRes.Output
+            Output = cmdRes.Output,
+            Error = cmdRes.Error
         };
     }
 

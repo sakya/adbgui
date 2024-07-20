@@ -1,8 +1,8 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
-using Avalonia.Markup.Xaml;
 using System;
+using Avalonia.Reactive;
 
 namespace adbgui.Controls
 {
@@ -14,6 +14,7 @@ namespace adbgui.Controls
         {
             InitializeComponent();
 
+            IsVisible = Environment.OSVersion.Platform == PlatformID.Win32NT;
             CanMinimize = true;
             CanMaximize = true;
         }
@@ -23,23 +24,13 @@ namespace adbgui.Controls
             set
             {
                 _canGoBack = value;
-                var btn = this.FindControl<Button>("BackBtn");
-                btn.IsVisible = _canGoBack;
-
-                var icon = this.FindControl<Image>("Icon");
-                icon.IsVisible = !_canGoBack;
+                BackBtn.IsVisible = _canGoBack;
+                Icon.IsVisible = !_canGoBack;
             }
         }
 
         public bool CanMinimize { get; set; }
         public bool CanMaximize { get; set; }
-
-        private void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
-
-            this.IsVisible = Environment.OSVersion.Platform == PlatformID.Win32NT;
-        }
 
         protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
         {
@@ -49,57 +40,48 @@ namespace adbgui.Controls
             if (pw != null) {
                 SetTitle(pw.Title);
                 var title = pw.GetObservable(Window.TitleProperty);
-                title.Subscribe(value =>
-                {
-                    SetTitle(value);
-                });
+                title.Subscribe(new AnonymousObserver<string?>(SetTitle));
 
                 var wState = pw.GetObservable(Window.WindowStateProperty);
-                wState.Subscribe(s =>
+                wState.Subscribe(new AnonymousObserver<WindowState>(s =>
                 {
-                    var btn = this.FindControl<Button>("MaximizeBtn");
                     if (s == WindowState.Maximized) {
                         pw.Padding = new Thickness(5);
-                        btn.Content = new Projektanker.Icons.Avalonia.Icon() { Value = "fas fa-window-restore" };
+                        MaximizeBtn.Content = new Projektanker.Icons.Avalonia.Icon() { Value = "fas fa-window-restore" };
                     } else {
                         pw.Padding = new Thickness(0);
-                        btn.Content = new Projektanker.Icons.Avalonia.Icon() { Value = "fas fa-window-maximize" };
+                        MaximizeBtn.Content = new Projektanker.Icons.Avalonia.Icon() { Value = "fas fa-window-maximize" };
                     }
-                });
+                }));
             }
 
-            var btn = this.FindControl<Button>("MinimizeBtn");
-            btn.Click += (e, a) =>
+            MinimizeBtn.Click += (e, a) =>
             {
                 ((Window)this.VisualRoot!).WindowState = WindowState.Minimized;
             };
-            btn.IsVisible = CanMinimize;
+            MinimizeBtn.IsVisible = CanMinimize;
 
-            btn = this.FindControl<Button>("MaximizeBtn");
-            btn.Click += (s, a) =>
+            MaximizeBtn.Click += (s, a) =>
             {
                 if (this.VisualRoot is Window vr)
                     vr.WindowState = vr.WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
             };
-            btn.IsVisible = CanMinimize;
+            MaximizeBtn.IsVisible = CanMinimize;
 
-            btn = this.FindControl<Button>("CloseBtn");
-            btn.Click += (s, a) =>
+            CloseBtn.Click += (s, a) =>
             {
                 ((Window)this.VisualRoot!).Close();
             };
 
-            btn = this.FindControl<Button>("BackBtn");
-            btn.Click += async (s, a) =>
+            BackBtn.Click += async (s, a) =>
             {
                 await (pw as MainWindow)!.NavigateBack();
             };
         }
 
-        private void SetTitle(string title)
+        private void SetTitle(string? title)
         {
-            var txt = this.FindControl<TextBlock>("Title");
-            txt.Text = title;
+            Title.Text = title;
         }
     }
 }

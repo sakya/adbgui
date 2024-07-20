@@ -1,6 +1,7 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="adbgui.App">
+             x:Class="adbgui.App"
+             RequestedThemeVariant="Dark">
 
     <Application.Resources>
         <Color x:Key="DebugColor">#bfbfbf</Color>
@@ -11,7 +12,7 @@
     </Application.Resources>
 
     <Application.Styles>
-        <FluentTheme Mode="Dark"/>
+        <FluentTheme />
 
         <Style Selector="Button.Accent">
             <Setter Property="Background" Value="{DynamicResource SystemAccentColor}"/>

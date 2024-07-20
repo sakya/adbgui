@@ -25,23 +25,23 @@ public partial class DeviceSelect : BasePage
 
     public override Task<bool> OnNavigatingFrom(NavigationDirection direction)
     {
-        List.Items = null;
+        List.ItemsSource = null;
         return Task.FromResult(true);
     }
 
     private async void OnRefreshClick(object? sender, RoutedEventArgs e)
     {
         RefreshBtn.IsEnabled = false;
-        List.Items = null;
+        List.ItemsSource = null;
         OkBtn.IsEnabled = false;
         var devices = await Adb.Adb.Instance!.ListDevices();
-        List.Items = devices;
+        List.ItemsSource = devices;
         RefreshBtn.IsEnabled = true;
     }
 
     private void OnListSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
-        var dev = List.SelectedItems.Count > 0 ? List.SelectedItems[0] as Device : null;
+        var dev = List.SelectedItems?.Count > 0 ? List.SelectedItems[0] as Device : null;
         OkBtn.IsEnabled = dev?.Authorized == true;
     }
 

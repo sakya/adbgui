@@ -32,7 +32,7 @@ public partial class PackageManager : BasePage
     private async void OnRefreshClick(object? sender, RoutedEventArgs e)
     {
         Spinner.IsVisible = true;
-        List.Items = null;
+        List.ItemsSource = null;
         _allPackages = await Adb.Adb.Instance!.ListPackages(App.SelectedDevice!.Id);
         FilterPackages();
         Spinner.IsVisible = false;
@@ -59,7 +59,7 @@ public partial class PackageManager : BasePage
                 .Where(p => p.Name != null && p.Name.Contains(SearchText.Text, StringComparison.InvariantCultureIgnoreCase))
                 .ToList();
         }
-        List.Items = filtered?.OrderBy(p => p.Name);;
+        List.ItemsSource = filtered?.OrderBy(p => p.Name);;
     }
 
     private void OnListSelectionChanged(object? sender, SelectionChangedEventArgs e)

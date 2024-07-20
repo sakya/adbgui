@@ -3,11 +3,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:i18n="clr-namespace:adbgui.Localizer"
+             xmlns:models="clr-namespace:adbgui.Adb.Models"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="adbgui.Pages.DeviceSelect">
     <Border Classes="rounded"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center">
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch">
         <Grid MinHeight="300">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -31,7 +32,7 @@
                  Margin="0,15,0,15"
                  SelectionChanged="OnListSelectionChanged">
             <ListBox.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="models:Device">
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="{Binding Id}" TextTrimming="CharacterEllipsis" />
                         <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" FontWeight="ExtraLight"

@@ -3,6 +3,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using adbgui.Controls.Models;
+using Avalonia.Reactive;
 
 namespace adbgui.Controls;
 
@@ -38,13 +39,13 @@ public partial class Spinner : UserControl
     {
         AvaloniaXamlLoader.Load(this);
         var iv = this.GetObservable(UserControl.IsVisibleProperty);
-        iv.Subscribe(value =>
+        iv.Subscribe(new AnonymousObserver<bool>(value =>
         {
             var stack = this.FindControl<StackPanel>("WaitSpinner");
             if (value)
                 stack.Classes.Add("spinner");
             else
                 stack.Classes.Remove("spinner");
-        });
+        }));
     }
 }

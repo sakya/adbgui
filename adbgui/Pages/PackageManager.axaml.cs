@@ -54,16 +54,36 @@ public partial class PackageManager : BasePage
     private void FilterPackages()
     {
         var filtered = _allPackages;
-        if (filtered != null && !string.IsNullOrEmpty(SearchText.Text)) {
+        TxtStatus.Text = string.Empty;
+        if (filtered == null)
+            return;
+
+        if (ChkShowDisabled.IsChecked == false) {
+            filtered = filtered.Where(p => p.Enabled)
+                .ToList();
+        }
+        if (ChkShowSystem.IsChecked == false) {
+            filtered = filtered.Where(p => !p.System)
+                .ToList();
+        }
+        if (ChkShowThirdParty.IsChecked == false) {
+            filtered = filtered.Where(p => !p.ThirdParty)
+                .ToList();
+        }
+
+        if (!string.IsNullOrEmpty(SearchText.Text)) {
             filtered = filtered
                 .Where(p => p.Name != null && p.Name.Contains(SearchText.Text, StringComparison.InvariantCultureIgnoreCase))
                 .ToList();
         }
-        List.ItemsSource = filtered?.OrderBy(p => p.Name);;
+        List.ItemsSource = filtered?.OrderBy(p => p.Name);
+
+        TxtStatus.Text = $"Packages: {filtered?.Count}";
     }
 
     private void OnListSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
+        DownloadBtn.IsEnabled = List.SelectedItems?.Count > 0;
         EnableBtn.IsEnabled = List.SelectedItems?.Count > 0;
         DisableBtn.IsEnabled = List.SelectedItems?.Count > 0;
         UninstallBtn.IsEnabled = List.SelectedItems?.Count > 0;
@@ -106,6 +126,7 @@ public partial class PackageManager : BasePage
         dlg.Operation = PackageOperations.Operations.Uninstall;
         dlg.PackageNames = pkgs.ToArray();
         await dlg.Show();
+        OnRefreshClick(null, new RoutedEventArgs());
     }
 
     private async void OnDisableClick(object? sender, RoutedEventArgs e)
@@ -123,6 +144,7 @@ public partial class PackageManager : BasePage
         dlg.Operation = PackageOperations.Operations.Disable;
         dlg.PackageNames = pkgs.ToArray();
         await dlg.Show();
+        OnRefreshClick(null, new RoutedEventArgs());
     }
 
     private async void OnEnableClick(object? sender, RoutedEventArgs e)
@@ -140,5 +162,29 @@ public partial class PackageManager : BasePage
         dlg.Operation = PackageOperations.Operations.Enable;
         dlg.PackageNames = pkgs.ToArray();
         await dlg.Show();
+        OnRefreshClick(null, new RoutedEventArgs());
+    }
+
+    private async void OnDownloadClick(object? sender, RoutedEventArgs e)
+    {
+        if (List.SelectedItems == null || List.SelectedItems.Count == 0)
+            return;
+
+        var dlg = new PackageOperations();
+        var pkgs = new List<string>();
+        foreach (var si in List.SelectedItems) {
+            if (si is Package pkg)
+                pkgs.Add(pkg.Name!);
+        }
+
+        dlg.Operation = PackageOperations.Operations.Download;
+        dlg.PackageNames = pkgs.ToArray();
+        await dlg.Show();
+        OnRefreshClick(null, new RoutedEventArgs());
+    }
+
+    private void OnTypeFilterChanged(object? sender, RoutedEventArgs e)
+    {
+        FilterPackages();
     }
 }

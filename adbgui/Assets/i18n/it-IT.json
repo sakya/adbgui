@@ -1,6 +1,7 @@
 {
   "Cancel": "Annulla",
   "Disable": "Disabilita",
+  "Download": "Download",
   "Enable": "Abilita",
   "FileManager": "Gestione file",
   "InstallAPK": "Installa APK",
@@ -11,6 +12,9 @@
   "RefreshDeviceList": "Aggiorna",
   "Search": "Cerca",
   "SelectDevice": "Seleziona il device che vuoi gestire",
+  "ShowDisabled": "Visualizza pacchetti disabilitati",
+  "ShowThirdParty": "Visualizza pacchetti di terze parti",
+  "ShowSystem": "Visualizza pacchetti di sistema",
 
   "Title_DeviceSelect": "Selezione device",
   "Title_Settings": "Impostazioni",

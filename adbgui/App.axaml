@@ -21,6 +21,14 @@
             <Setter Property="Background" Value="#115992"/>
         </Style>
 
+
+        <Style Selector="Button.Warning">
+            <Setter Property="Background" Value="{DynamicResource WarningColor}"/>
+        </Style>
+        <Style Selector="Button.Warning:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#EF9F2E"/>
+        </Style>
+
         <Style Selector="Button.Danger">
             <Setter Property="Background" Value="{DynamicResource DangerColor}"/>
         </Style>

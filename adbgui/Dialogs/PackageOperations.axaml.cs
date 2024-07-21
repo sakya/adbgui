@@ -20,7 +20,8 @@ public partial class PackageOperations : BaseDialog
     {
         Disable,
         Enable,
-        Uninstall
+        Uninstall,
+        Download
     }
 
     public PackageOperations()
@@ -71,6 +72,11 @@ public partial class PackageOperations : BaseDialog
 
             PackageOperationResult? res = null;
             switch (Operation) {
+                case Operations.Download:
+                    _log.AppendLine($"Downloading {pkg}");
+                    UpdateLog();
+                    res = await Adb.Adb.Instance!.DownloadPackage(App.SelectedDevice!.Id, pkg);
+                    break;
                 case Operations.Enable:
                     _log.AppendLine($"Enabling {pkg}");
                     UpdateLog();
@@ -97,6 +103,10 @@ public partial class PackageOperations : BaseDialog
                 _log.AppendLine(res.Result ? "SUCCESS" : "FAILED");
                 _log.AppendLine();
                 UpdateLog();
+                if (res.Result) {
+                    _running = false;
+                    Close();
+                }
             }
         }
 

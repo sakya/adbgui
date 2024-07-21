@@ -18,9 +18,14 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
@@ -31,6 +36,21 @@
             <Button Grid.Column="1" MinHeight="32" Name="SearchBtn" Click="OnSearchClick">
                 <i:Icon Value="fas fa-search" />
             </Button>
+
+            <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <ToggleSwitch Grid.Column="0" Name="ChkShowSystem" Content="{i18n:Localize ShowSystem}" IsChecked="True"
+                              IsCheckedChanged="OnTypeFilterChanged"/>
+                <ToggleSwitch Grid.Column="1" Name="ChkShowDisabled" Content="{i18n:Localize ShowDisabled}" IsChecked="True"
+                              IsCheckedChanged="OnTypeFilterChanged"/>
+                <ToggleSwitch Grid.Column="2" Name="ChkShowThirdParty" Content="{i18n:Localize ShowThirdParty}" IsChecked="True"
+                              IsCheckedChanged="OnTypeFilterChanged"/>
+            </Grid>
         </Grid>
 
         <Grid Grid.Row="1" Margin="0,10,0,10">
@@ -42,34 +62,58 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Stretch"
+            <Button Grid.Row="0" Grid.ColumnSpan="4" HorizontalAlignment="Stretch"
                     Click="OnInstallBtnClick">
-                <TextBlock HorizontalAlignment="Center" Text="{i18n:Localize InstallAPK}" />
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <i:Icon Value="fa fa-upload" Margin="0,0,10,0" />
+                    <TextBlock HorizontalAlignment="Center" Text="{i18n:Localize InstallAPK}" />
+                </StackPanel>
             </Button>
 
             <Button Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch"
                     Margin="0,5,5,0"
+                    Name="DownloadBtn"
+                    IsEnabled="False"
+                    Click="OnDownloadClick">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <i:Icon Value="fas fa-download" Margin="0,0,10,0" />
+                    <TextBlock HorizontalAlignment="Center" Text="{i18n:Localize Download}" />
+                </StackPanel>
+            </Button>
+            <Button Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch"
+                    Margin="5,5,5,0"
+                    Classes="Warning"
                     Name="DisableBtn"
                     IsEnabled="False"
                     Click="OnDisableClick">
-                <TextBlock HorizontalAlignment="Center" Text="{i18n:Localize Disable}" />
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <i:Icon Value="fas fa-ban" Margin="0,0,10,0" />
+                    <TextBlock HorizontalAlignment="Center" Text="{i18n:Localize Disable}" />
+                </StackPanel>
             </Button>
-            <Button Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch"
+            <Button Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch"
                     Margin="5,5,5,0"
                     Name="EnableBtn"
                     IsEnabled="False"
                     Click="OnEnableClick">
-                <TextBlock HorizontalAlignment="Center" Text="{i18n:Localize Enable}" />
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <i:Icon Value="fas fa-check" Margin="0,0,10,0" />
+                    <TextBlock HorizontalAlignment="Center" Text="{i18n:Localize Enable}" />
+                </StackPanel>
             </Button>
-            <Button Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch"
+            <Button Grid.Row="1" Grid.Column="3" HorizontalAlignment="Stretch"
                     Classes="Danger"
                     Margin="5,5,0,0"
                     Name="UninstallBtn"
                     IsEnabled="False"
                     Click="OnUninstallBtnClick">
-                <TextBlock HorizontalAlignment="Center" Text="{i18n:Localize Uninstall}" />
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <i:Icon Value="fa fa-trash" Margin="0,0,10,0" />
+                    <TextBlock HorizontalAlignment="Center" Text="{i18n:Localize Uninstall}" />
+                </StackPanel>
             </Button>
         </Grid>
 
@@ -101,5 +145,7 @@
                           IsVisible="False"
                           VerticalAlignment="Center"
                           HorizontalAlignment="Center"/>
+
+        <TextBlock Grid.Row="3" Name="TxtStatus" Margin="0,5,0,0" />
     </Grid>
 </UserControl>

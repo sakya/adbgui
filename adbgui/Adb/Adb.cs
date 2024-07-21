@@ -248,6 +248,49 @@ public class Adb
         };
     }
 
+    /// <summary>
+    /// Download a package APK
+    /// </summary>
+    /// <param name="deviceId">The device id</param>
+    /// <param name="packageName">The package name to download</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    public async Task<PackageOperationResult> DownloadPackage(string? deviceId, string packageName)
+    {
+        if (string.IsNullOrEmpty(deviceId))
+            throw new ArgumentNullException(nameof(deviceId));
+
+        var cmdRes = await RunCommand($"-s {deviceId} shell cmd package path {packageName}");
+        if (cmdRes.ExitCode != 0 || string.IsNullOrEmpty(cmdRes.Output)) {
+            return new PackageOperationResult()
+            {
+                Result = cmdRes.ExitCode == 0,
+                Output = cmdRes.Output,
+                Error = cmdRes.Error
+            };
+        }
+
+        var m = Regex.Match(cmdRes.Output, "package:(.*)");
+        if (m.Success) {
+            var file = m.Groups[1].Value;
+            if (await PullFile(deviceId, file, Path.Combine(GetDownloadFolder(), $"{packageName}.apk"))) {
+                return new PackageOperationResult()
+                {
+                    Result = true,
+                    Output = string.Empty,
+                    Error = string.Empty
+                };
+            }
+        }
+
+        return new PackageOperationResult()
+        {
+            Result = false,
+            Output = string.Empty,
+            Error = string.Empty
+        };
+    }
+
     public async Task<bool> PullFile(string? deviceId, string deviceFilePath, string localFilePath)
     {
         if (string.IsNullOrEmpty(deviceId))
@@ -326,4 +369,22 @@ public class Adb
             res.Error = res.Error.Replace("\r", string.Empty);
         return res;
     }
+
+    private string GetDownloadFolder()
+    {
+        var home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        var folders = new List<string>()
+        {
+            Path.Combine(home, "Downloads"),
+            Path.Combine(home, "downloads"),
+            Path.Combine(home, "Download"),
+            Path.Combine(home, "download"),
+        };
+
+        foreach (var f in folders) {
+            if (Directory.Exists(f))
+                return f;
+        }
+        return home;
+    } // GetDownloadFolder
 }

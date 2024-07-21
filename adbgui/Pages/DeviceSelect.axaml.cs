@@ -4,6 +4,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.SingleWindow;
 using Avalonia.SingleWindow.Abstracts;
+using Avalonia.Threading;
 
 namespace adbgui.Pages;
 
@@ -20,7 +21,7 @@ public partial class DeviceSelect : BasePage
     {
         base.OnNavigatedTo(direction);
         App.SelectedDevice = null;
-        OnRefreshClick(null, new RoutedEventArgs());
+        Dispatcher.UIThread.Post(() => { OnRefreshClick(null, new RoutedEventArgs()); }, DispatcherPriority.Background);
     }
 
     public override Task<bool> OnNavigatingFrom(NavigationDirection direction)
@@ -36,6 +37,9 @@ public partial class DeviceSelect : BasePage
         OkBtn.IsEnabled = false;
         var devices = await Adb.Adb.Instance!.ListDevices();
         List.ItemsSource = devices;
+        if (devices.Count == 1) {
+            List.SelectedIndex = 0;
+        }
         RefreshBtn.IsEnabled = true;
     }
 

@@ -103,13 +103,10 @@ public partial class PackageOperations : BaseDialog
                 _log.AppendLine(res.Result ? "SUCCESS" : "FAILED");
                 _log.AppendLine();
                 UpdateLog();
-                if (res.Result) {
-                    _running = false;
-                    Close();
-                }
             }
         }
 
+        Dispatcher.UIThread.Post(() => { TxtButtonText.Text = Localizer.Localizer.Instance["Close"]; });
         _running = false;
     }
 

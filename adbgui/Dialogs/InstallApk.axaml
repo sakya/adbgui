@@ -28,7 +28,7 @@
                     HorizontalAlignment="Stretch"
                     Margin="0,15,0,0"
                     Click="OnCancelClick">
-                <TextBlock Text="{i18n:Localize Cancel}" HorizontalAlignment="Center" />
+                <TextBlock Name="TxtButtonText" Text="{i18n:Localize Cancel}" HorizontalAlignment="Center" />
             </Button>
         </Grid>
     </Panel>

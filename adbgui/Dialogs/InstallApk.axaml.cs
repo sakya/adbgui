@@ -63,9 +63,9 @@ public partial class InstallApk : BaseDialog
             _log.AppendLine(res.Result ? "SUCCESS" : "FAILED");
             _log.AppendLine();
             UpdateLog();
-            if (res.Result)
-                Close();
         }
+
+        Dispatcher.UIThread.Post(() => { TxtButtonText.Text = Localizer.Localizer.Instance["Close"]; });
     }
 
     private void UpdateLog()

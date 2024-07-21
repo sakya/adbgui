@@ -10,7 +10,7 @@ using adbgui.Adb.Models;
 
 namespace adbgui.Adb;
 
-public class Adb
+public partial class Adb
 {
     class CommandResult
     {
@@ -44,7 +44,7 @@ public class Adb
         if (cmdRes.ExitCode == 0 && !string.IsNullOrEmpty(cmdRes.Output)) {
             var lines = cmdRes.Output.Split('\n', StringSplitOptions.RemoveEmptyEntries);
             if (lines.Length > 0) {
-                var m = Regex.Match(lines[0], "Android Debug Bridge version ([0-9\\.]+)");
+                var m = AdbVersionRegex().Match(lines[0]);
                 if (m.Success) {
                     Version = m.Groups[1].Value;
                     return true;
@@ -143,6 +143,28 @@ public class Adb
                 p.Enabled = true;
                 p.ThirdParty = true;
                 res.Add(p);
+            }
+        }
+
+        // Get packages version
+        var cmdRes = await RunCommand($"-s {deviceId} shell dumpsys package packages ");
+        if (cmdRes.ExitCode == 0 && !string.IsNullOrEmpty(cmdRes.Output)) {
+            var pkgName = string.Empty;
+            var lines = cmdRes.Output.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines) {
+                var pkgNameMatch = PackageNameRegex().Match(line);
+                if (pkgNameMatch.Success) {
+                    pkgName = pkgNameMatch.Groups[1].Value;
+                } else {
+                    var pkgVersionMatch = PackageVersionRegex().Match(line);
+                    if (pkgVersionMatch.Success && !string.IsNullOrEmpty(pkgName)) {
+                        var ep = res.FirstOrDefault(ep => ep.Name == pkgName);
+                        if (ep != null) {
+                            ep.Version = pkgVersionMatch.Groups[1].Value;
+                        }
+
+                    }
+                }
             }
         }
 
@@ -270,7 +292,7 @@ public class Adb
             };
         }
 
-        var m = Regex.Match(cmdRes.Output, "package:(.*)");
+        var m = PackageRegex().Match(cmdRes.Output);
         if (m.Success) {
             var file = m.Groups[1].Value;
             if (await PullFile(deviceId, file, Path.Combine(GetDownloadFolder(), $"{packageName}.apk"))) {
@@ -289,6 +311,29 @@ public class Adb
             Output = string.Empty,
             Error = string.Empty
         };
+    }
+
+    /// <summary>
+    /// Disable a package
+    /// </summary>
+    /// <param name="deviceId">The device id</param>
+    /// <param name="packageName">The package name to disable</param>
+    /// <returns></returns>
+    public async Task<string> GetPackageVersion(string? deviceId, string packageName)
+    {
+        if (string.IsNullOrEmpty(deviceId))
+            throw new ArgumentNullException(nameof(deviceId));
+
+        var cmdRes = await RunCommand($"-s {deviceId} shell dumpsys package {packageName}");
+        if (cmdRes.ExitCode != 0 || string.IsNullOrEmpty(cmdRes.Output))
+            return string.Empty;
+
+        var m = Regex.Match(cmdRes.Output, @"\s+versionName=(.*)$");
+        if (m.Success) {
+            return m.Groups[1].Value;
+        }
+
+        return string.Empty;
     }
 
     public async Task<bool> PullFile(string? deviceId, string deviceFilePath, string localFilePath)
@@ -318,9 +363,8 @@ public class Adb
         var cmdRes = await RunCommand(args);
         if (cmdRes.ExitCode == 0 && !string.IsNullOrEmpty(cmdRes.Output)) {
             var lines = cmdRes.Output.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-            var regex = new Regex("package:(.*)=(.*) uid:(.*)");
             foreach (var line in lines) {
-                var m = regex.Match(line);
+                var m = PackageListRegex().Match(line);
                 if (m.Success) {
                     res.Add(new Package()
                     {
@@ -387,4 +431,19 @@ public class Adb
         }
         return home;
     } // GetDownloadFolder
+
+    [GeneratedRegex("package:(.*)")]
+    private static partial Regex PackageRegex();
+
+    [GeneratedRegex("Android Debug Bridge version ([0-9\\.]+)")]
+    private static partial Regex AdbVersionRegex();
+
+    [GeneratedRegex("package:(.*)=(.*) uid:(.*)")]
+    private static partial Regex PackageListRegex();
+
+    [GeneratedRegex(@" +Package \[(.*)\] \((.*)\)")]
+    private static partial Regex PackageNameRegex();
+
+    [GeneratedRegex(" +versionName=(.*)")]
+    private static partial Regex PackageVersionRegex();
 }

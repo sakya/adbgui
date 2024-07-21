@@ -78,7 +78,7 @@ public partial class PackageManager : BasePage
         }
         List.ItemsSource = filtered.OrderBy(p => p.Name);
 
-        TxtStatus.Text = $"Packages: {filtered.Count}";
+        TxtStatus.Text = $"ADB version: {Adb.Adb.Instance!.Version} Packages: {filtered.Count}";
     }
 
     private void OnListSelectionChanged(object? sender, SelectionChangedEventArgs e)

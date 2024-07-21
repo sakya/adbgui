@@ -11,6 +11,7 @@
              x:Class="adbgui.Pages.PackageManager">
     <UserControl.Resources>
         <converters:PackageIconConverter x:Key="PackageIconConverter"/>
+        <converters:PackageNameConverter x:Key="PackageNameConverter"/>
     </UserControl.Resources>
 
     <Grid>
@@ -133,7 +134,7 @@
                                 FontSize="20"/>
 
                         <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
-                            <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
+                            <TextBlock Text="{Binding Converter={StaticResource PackageNameConverter}}" TextTrimming="CharacterEllipsis" />
                             <TextBlock Text="{Binding Type}" FontWeight="ExtraLight" TextTrimming="CharacterEllipsis" />
                         </StackPanel>
                     </Grid>

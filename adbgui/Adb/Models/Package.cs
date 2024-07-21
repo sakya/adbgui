@@ -4,8 +4,9 @@ namespace adbgui.Adb.Models;
 
 public class Package
 {
-    public string? Uid { get; set; }
+    public string? Uid { get; init; }
     public string? Name { get; set; }
+    public string? Version { get; set; }
     public string? File { get; set; }
     public bool Enabled { get; set; }
     public bool System { get; set; }

@@ -21,7 +21,7 @@ public partial class DeviceSelect : BasePage
     {
         base.OnNavigatedTo(direction);
         App.SelectedDevice = null;
-        Dispatcher.UIThread.Post(() => { OnRefreshClick(null, new RoutedEventArgs()); }, DispatcherPriority.Background);
+        Dispatcher.UIThread.Post(() => { OnRefreshClick(null, new RoutedEventArgs()); }, DispatcherPriority.ApplicationIdle);
     }
 
     public override Task<bool> OnNavigatingFrom(NavigationDirection direction)
@@ -35,11 +35,14 @@ public partial class DeviceSelect : BasePage
         RefreshBtn.IsEnabled = false;
         List.ItemsSource = null;
         OkBtn.IsEnabled = false;
+
+        await Adb.Adb.Instance!.GetVersion();
         var devices = await Adb.Adb.Instance!.ListDevices();
         List.ItemsSource = devices;
         if (devices.Count == 1) {
             List.SelectedIndex = 0;
         }
+
         RefreshBtn.IsEnabled = true;
     }
 

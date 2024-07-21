@@ -47,8 +47,10 @@ public partial class DeviceSelect : BasePage
 
     private async void OnOkClick(object? sender, RoutedEventArgs e)
     {
-        var dev = List.SelectedItems[0] as Device;
-        if (dev != null && dev.Authorized) {
+        if (List.SelectedItems == null)
+            return;
+
+        if (List.SelectedItems[0] is Device { Authorized: true } dev) {
             App.SelectedDevice = dev;
             await MainWindowBase.Instance.NavigateTo(new MainPage(dev));
         }

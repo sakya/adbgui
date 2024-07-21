@@ -85,7 +85,7 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <i:Icon Value="{Binding, Converter={StaticResource PackageIconConverter}}" Margin="0,0,10,0"
+                        <i:Icon Value="{Binding Converter={StaticResource PackageIconConverter}}" Margin="0,0,10,0"
                                 FontSize="20"/>
 
                         <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">

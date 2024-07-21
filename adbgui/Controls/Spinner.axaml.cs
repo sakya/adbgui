@@ -42,6 +42,9 @@ public partial class Spinner : UserControl
         iv.Subscribe(new AnonymousObserver<bool>(value =>
         {
             var stack = this.FindControl<StackPanel>("WaitSpinner");
+            if (stack == null)
+                return;
+
             if (value)
                 stack.Classes.Add("spinner");
             else

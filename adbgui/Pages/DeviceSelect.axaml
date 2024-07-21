@@ -6,9 +6,7 @@
              xmlns:models="clr-namespace:adbgui.Adb.Models"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="adbgui.Pages.DeviceSelect">
-    <Border Classes="rounded"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch">
+    <Border Classes="rounded">
         <Grid MinHeight="300">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

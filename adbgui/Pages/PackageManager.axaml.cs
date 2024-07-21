@@ -93,7 +93,7 @@ public partial class PackageManager : BasePage
 
     private async void OnUninstallBtnClick(object? sender, RoutedEventArgs e)
     {
-        if (List.SelectedItems.Count == 0)
+        if (List.SelectedItems == null || List.SelectedItems.Count == 0)
             return;
 
         var dlg = new PackageOperations();
@@ -110,7 +110,7 @@ public partial class PackageManager : BasePage
 
     private async void OnDisableClick(object? sender, RoutedEventArgs e)
     {
-        if (List.SelectedItems.Count == 0)
+        if (List.SelectedItems == null || List.SelectedItems.Count == 0)
             return;
 
         var dlg = new PackageOperations();
@@ -127,7 +127,7 @@ public partial class PackageManager : BasePage
 
     private async void OnEnableClick(object? sender, RoutedEventArgs e)
     {
-        if (List.SelectedItems.Count == 0)
+        if (List.SelectedItems == null || List.SelectedItems.Count == 0)
             return;
 
         var dlg = new PackageOperations();

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Mime;
+using System.Web;
 using adbgui.Adb.Models;
 using adbgui.Dialogs;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using Avalonia.SingleWindow;
+using Avalonia.Platform.Storage;
 using Avalonia.SingleWindow.Abstracts;
 
 namespace adbgui.Pages;
@@ -91,24 +91,24 @@ public partial class PackageManager : BasePage
 
     private async void OnInstallBtnClick(object? sender, RoutedEventArgs e)
     {
-        var dlg = new OpenFileDialog();
-        dlg.Filters = new List<FileDialogFilter>()
+        var files = await MainWindow.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions()
         {
-            new()
+            AllowMultiple = false,
+            FileTypeFilter = new []
             {
-                Name = "apk",
-                Extensions = new List<string>() { "apk" }
+                new FilePickerFileType("Android Package File")
+                {
+                    Patterns = new []{ "*.apk" }
+                },
             }
+        });
+        if (files.Count <= 0)
+            return;
 
-        };
+        var iDlg = new InstallApk();
+        iDlg.ApkFiles = files.Select(f =>  HttpUtility.UrlDecode(f.Path.AbsolutePath)).ToArray();
 
-        var files = await dlg.ShowAsync(MainWindowBase.Instance);
-        if (files?.Length > 0) {
-            var iDlg = new InstallApk();
-            iDlg.ApkFiles = files;
-
-            await iDlg.Show();
-        }
+        await iDlg.Show();
     }
 
     private async void OnUninstallBtnClick(object? sender, RoutedEventArgs e)

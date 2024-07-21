@@ -247,6 +247,26 @@ public class Adb
             Error = cmdRes.Error
         };
     }
+
+    public async Task<bool> PullFile(string? deviceId, string deviceFilePath, string localFilePath)
+    {
+        if (string.IsNullOrEmpty(deviceId))
+            throw new ArgumentNullException(nameof(deviceId));
+
+        var cmdRes = await RunCommand($"-s {deviceId} pull \"{deviceFilePath}\" \"{localFilePath}\"");
+
+        return cmdRes.ExitCode == 0;
+    }
+
+    public async Task<bool> PushFile(string? deviceId, string localFilePath, string deviceFilePath)
+    {
+        if (string.IsNullOrEmpty(deviceId))
+            throw new ArgumentNullException(nameof(deviceId));
+
+        var cmdRes = await RunCommand($"-s {deviceId} push \"{localFilePath}\" \"{deviceFilePath}\"");
+
+        return cmdRes.ExitCode == 0;
+    }
     #endregion
 
     private async Task<List<Package>> GetPackages(string args)

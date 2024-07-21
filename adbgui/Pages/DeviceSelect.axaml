@@ -20,7 +20,7 @@
         <Button Grid.Row="1"
                 HorizontalAlignment="Stretch"
                 Margin="0,15,0,0"
-                Classes="Accent"
+                Classes="Success"
                 Name="RefreshBtn"
                 Click="OnRefreshClick">
             <TextBlock HorizontalAlignment="Center" Text="{i18n:Localize RefreshDeviceList}"/>

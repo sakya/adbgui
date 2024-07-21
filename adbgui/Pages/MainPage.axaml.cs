@@ -37,10 +37,16 @@ public partial class MainPage : BasePage
         Adb.Adb.Instance!.OpenTerminal(App.SelectedDevice!.Id);
     }
 
+    private async void OnSettingsClick(object? sender, RoutedEventArgs e)
+    {
+        await MainWindowBase.Instance.NavigateTo(new Settings());
+    }
+
     private void OnQuitClick(object? sender, RoutedEventArgs e)
     {
         if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop) {
             desktop.Shutdown();
         }
     }
+
 }

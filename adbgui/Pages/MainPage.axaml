@@ -13,6 +13,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Button Grid.Row="0" HorizontalAlignment="Stretch" Click="OnPackagaManagerClick">
@@ -36,8 +37,16 @@
             </StackPanel>
         </Button>
 
-        <Button Grid.Row="4" HorizontalAlignment="Stretch" Click="OnQuitClick"
-                Classes="Danger" Margin="0,30,0,0">
+        <Button Grid.Row="4" HorizontalAlignment="Stretch" Click="OnSettingsClick"
+                Margin="0,30,0,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <i:Icon Value="fas fa-cogs" Margin="0,0,10,0" />
+                <TextBlock Text="{i18n:Localize Settings}"/>
+            </StackPanel>
+        </Button>
+
+        <Button Grid.Row="5" HorizontalAlignment="Stretch" Click="OnQuitClick"
+                Classes="Danger" Margin="0,15,0,0">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <i:Icon Value="fas fa-sign-out-alt" Margin="0,0,10,0" />
                 <TextBlock Text="{i18n:Localize Quit}"/>

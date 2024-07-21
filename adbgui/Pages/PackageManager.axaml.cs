@@ -9,6 +9,7 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using Avalonia.SingleWindow.Abstracts;
+using Avalonia.Threading;
 
 namespace adbgui.Pages;
 
@@ -26,7 +27,7 @@ public partial class PackageManager : BasePage
     public override void OnNavigatedTo(NavigationDirection direction)
     {
         base.OnNavigatedTo(direction);
-        OnRefreshClick(null, new RoutedEventArgs());
+        Dispatcher.UIThread.Post(() => { OnRefreshClick(null, new RoutedEventArgs()); }, DispatcherPriority.ApplicationIdle);
     }
 
     private async void OnRefreshClick(object? sender, RoutedEventArgs e)

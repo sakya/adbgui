@@ -76,9 +76,9 @@ public partial class PackageManager : BasePage
                 .Where(p => p.Name != null && p.Name.Contains(SearchText.Text, StringComparison.InvariantCultureIgnoreCase))
                 .ToList();
         }
-        List.ItemsSource = filtered?.OrderBy(p => p.Name);
+        List.ItemsSource = filtered.OrderBy(p => p.Name);
 
-        TxtStatus.Text = $"Packages: {filtered?.Count}";
+        TxtStatus.Text = $"Packages: {filtered.Count}";
     }
 
     private void OnListSelectionChanged(object? sender, SelectionChangedEventArgs e)

@@ -419,7 +419,14 @@ public partial class Adb
         }
 
         return res
-            .OrderBy(i => i.Type)
+            .OrderBy(i =>
+                i.Type switch
+                {
+                    FileSystemItem.FileTypes.Directory => 0,
+                    FileSystemItem.FileTypes.File => 1,
+                    FileSystemItem.FileTypes.Symlink => 1,
+                    _ => throw new ArgumentOutOfRangeException()
+                })
             .ThenBy(i => i.Name)
             .ToList();
     }

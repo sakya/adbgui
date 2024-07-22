@@ -21,9 +21,16 @@
         <ListBox Name="List"
                  Grid.Row="1"
                  SelectionMode="Multiple">
+            <ListBox.Styles>
+                <Style Selector="ListBoxItem">
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListBox.Styles>
             <ListBox.ItemTemplate>
                 <DataTemplate x:DataType="models:FileSystemItem">
-                    <Grid Height="55">
+                    <Grid Height="55"
+                          DoubleTapped="OnElementDoubleTapped">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />

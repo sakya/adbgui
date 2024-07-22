@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using adbgui.Adb.Models;
-using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
-using Avalonia.Markup.Xaml;
 using Avalonia.SingleWindow.Abstracts;
 using Avalonia.Threading;
 
@@ -35,5 +34,18 @@ public partial class FileManager : BasePage
         _files = await Adb.Adb.Instance!.ListDirectoryContent(App.SelectedDevice!.Id, _currentPath);
         List.ItemsSource = _files;
         Spinner.IsVisible = false;
+    }
+
+    private void OnElementDoubleTapped(object? sender, TappedEventArgs e)
+    {
+        var ctrl = sender as Control;
+        if (ctrl?.DataContext is FileSystemItem item) {
+            if (item.Type == FileSystemItem.FileTypes.Directory) {
+                if (!_currentPath.EndsWith("/"))
+                    _currentPath = $"{_currentPath}/";
+                _currentPath = $"{_currentPath}{item.Name}";
+                Dispatcher.UIThread.Post(() => { OnRefreshClick(null, new RoutedEventArgs()); }, DispatcherPriority.ApplicationIdle);
+            }
+        }
     }
 }

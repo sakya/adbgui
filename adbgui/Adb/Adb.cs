@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -336,6 +337,14 @@ public partial class Adb
         return string.Empty;
     }
 
+    /// <summary>
+    /// Download a file from the device
+    /// </summary>
+    /// <param name="deviceId">The device id</param>
+    /// <param name="deviceFilePath">The path of the file on the device</param>
+    /// <param name="localFilePath">The local location to download the file to</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
     public async Task<bool> PullFile(string? deviceId, string deviceFilePath, string localFilePath)
     {
         if (string.IsNullOrEmpty(deviceId))
@@ -346,6 +355,14 @@ public partial class Adb
         return cmdRes.ExitCode == 0;
     }
 
+    /// <summary>
+    /// Upload a file from the device
+    /// </summary>
+    /// <param name="deviceId">The device id</param>
+    /// <param name="localFilePath">The local file to upload to the device</param>
+    /// <param name="deviceFilePath">The path of the file on the device</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
     public async Task<bool> PushFile(string? deviceId, string localFilePath, string deviceFilePath)
     {
         if (string.IsNullOrEmpty(deviceId))
@@ -355,6 +372,55 @@ public partial class Adb
 
         return cmdRes.ExitCode == 0;
     }
+
+    /// <summary>
+    /// List the content of a directory
+    /// </summary>
+    /// <param name="deviceId">The device id</param>
+    /// <param name="path">The path</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="Exception"></exception>
+    public async Task<List<FileSystemItem>> ListDirectoryContent(string? deviceId, string path)
+    {
+        if (string.IsNullOrEmpty(deviceId))
+            throw new ArgumentNullException(nameof(deviceId));
+
+        var cmdRes = await RunCommand($"-s {deviceId} shell ls -la \"{path}\"");
+        if (cmdRes.ExitCode != 0 && string.IsNullOrEmpty(cmdRes.Output)) {
+            throw new Exception($"Error listing {path}: {cmdRes.Error}");
+        }
+
+        var res = new List<FileSystemItem>();
+        if (!string.IsNullOrEmpty(cmdRes.Output)) {
+            var lines = cmdRes.Output.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines) {
+                var m = LsLineRegex().Match(line);
+                if (m.Success) {
+                    var item = new FileSystemItem();
+                    item.Type = m.Groups[1].Value[0] switch
+                    {
+                        '-' => FileSystemItem.FileTypes.File,
+                        'd' => FileSystemItem.FileTypes.Directory,
+                        'l' => FileSystemItem.FileTypes.Symlink,
+                        _ => item.Type
+                    };
+                    item.OwnerUser = m.Groups[3].Value;
+                    item.OwnerGroup = m.Groups[4].Value;
+                    item.Size = long.Parse(m.Groups[5].Value);
+                    if (DateTime.TryParseExact(m.Groups[6].Value, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out var dt)) {
+                        item.LastModifiedDate = dt;
+                    }
+                    item.Name = m.Groups[7].Value;
+
+                    res.Add(item);
+                }
+            }
+        }
+
+        return res;
+    }
+
     #endregion
 
     private async Task<List<Package>> GetPackages(string args)
@@ -446,4 +512,7 @@ public partial class Adb
 
     [GeneratedRegex(" +versionName=(.*)")]
     private static partial Regex PackageVersionRegex();
+
+    [GeneratedRegex("(.*?) +([0-9]+) +(.*?) +(.*?) +([0-9]+) +([0-9\\-: ]+)+ +(.*)")]
+    private static partial Regex LsLineRegex();
 }

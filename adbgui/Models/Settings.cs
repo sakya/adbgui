@@ -17,14 +17,14 @@ public class Settings
         if (!File.Exists(file))
             return null;
 
-        using StreamReader sr = new StreamReader(file);
+        using var sr = new StreamReader(file);
         var settings = new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Objects };
         return JsonConvert.DeserializeObject<Settings>(sr.ReadToEnd(), settings);
     }
 
     public void Save()
     {
-        using StreamWriter sw = new StreamWriter(System.IO.Path.Combine(Path, "settings.json"));
+        using var sw = new StreamWriter(System.IO.Path.Combine(Path, "settings.json"));
         var settings = new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Objects };
         sw.Write(JsonConvert.SerializeObject(this, Formatting.Indented, settings));
     }

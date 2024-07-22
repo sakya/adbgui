@@ -30,9 +30,10 @@ public partial class FileManager : BasePage
 
     private async void OnRefreshClick(object? sender, RoutedEventArgs e)
     {
-        //Spinner.IsVisible = true;
-        //List.ItemsSource = null;
+        Spinner.IsVisible = true;
+        List.ItemsSource = null;
         _files = await Adb.Adb.Instance!.ListDirectoryContent(App.SelectedDevice!.Id, _currentPath);
-        //Spinner.IsVisible = false;
+        List.ItemsSource = _files;
+        Spinner.IsVisible = false;
     }
 }

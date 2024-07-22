@@ -7,8 +7,8 @@ public class FileSystemItem
 {
     public enum FileTypes
     {
-        File,
         Directory,
+        File,
         Symlink
     }
 

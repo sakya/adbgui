@@ -418,7 +418,10 @@ public partial class Adb
             }
         }
 
-        return res;
+        return res
+            .OrderBy(i => i.Type)
+            .ThenBy(i => i.Name)
+            .ToList();
     }
 
     #endregion

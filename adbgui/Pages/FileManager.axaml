@@ -2,7 +2,48 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:i="clr-namespace:Projektanker.Icons.Avalonia;assembly=Projektanker.Icons.Avalonia"
+             xmlns:converters="clr-namespace:adbgui.Converters"
+             xmlns:controls="clr-namespace:adbgui.Controls"
+             xmlns:models="clr-namespace:adbgui.Adb.Models"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="adbgui.Pages.FileManager">
-    Welcome to Avalonia!
+    <UserControl.Resources>
+        <converters:FileSystemItemIconConverter x:Key="FileSystemItemIconConverter"/>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <ListBox Name="List"
+                 Grid.Row="1"
+                 SelectionMode="Multiple">
+            <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="models:FileSystemItem">
+                    <Grid Height="55">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <i:Icon Value="{Binding Converter={StaticResource FileSystemItemIconConverter}}" Margin="0,0,10,0"
+                                FontSize="20"/>
+
+                        <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
+                            <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <controls:Spinner Grid.Row="1" Name="Spinner"
+                          IsVisible="False"
+                          VerticalAlignment="Center"
+                          HorizontalAlignment="Center"/>
+
+    </Grid>
 </UserControl>

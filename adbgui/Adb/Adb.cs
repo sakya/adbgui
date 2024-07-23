@@ -388,7 +388,7 @@ public partial class Adb
 
         var cmdRes = await RunCommand($"-s {deviceId} shell ls -la \"{path}\"");
         if (cmdRes.ExitCode != 0 && string.IsNullOrEmpty(cmdRes.Output)) {
-            throw new Exception($"Error listing {path}: {cmdRes.Error}");
+            throw new Exception($"Error listing {path}\r\n{cmdRes.Error}");
         }
 
         var res = new List<FileSystemItem>();

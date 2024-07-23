@@ -30,6 +30,7 @@
             <ListBox.ItemTemplate>
                 <DataTemplate x:DataType="models:FileSystemItem">
                     <Grid Height="55"
+                          Background="Transparent"
                           DoubleTapped="OnElementDoubleTapped">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />

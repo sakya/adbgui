@@ -48,6 +48,7 @@ public partial class InstallApk : BaseDialog
         if (ApkFiles == null)
             return;
 
+        var result = true;
         foreach (var apk in ApkFiles) {
             if (token.IsCancellationRequested) {
                 _log.AppendLine("User aborted");
@@ -59,13 +60,21 @@ public partial class InstallApk : BaseDialog
             UpdateLog();
 
             var res = await Adb.Adb.Instance!.InstallApk(App.SelectedDevice!.Id, apk);
+            if (result && !res.Result)
+                result = false;
+
             _log.AppendLine(res.Output);
             _log.AppendLine(res.Result ? "SUCCESS" : "FAILED");
             _log.AppendLine();
             UpdateLog();
         }
 
-        Dispatcher.UIThread.Post(() => { TxtButtonText.Text = Localizer.Localizer.Instance["Close"]; });
+        Dispatcher.UIThread.Post(() =>
+        {
+            TxtButtonText.Text = Localizer.Localizer.Instance["Close"];
+            Button.Classes.Remove("Danger");
+            Button.Classes.Add(result ? "Success" : "Warning");
+        });
     }
 
     private void UpdateLog()

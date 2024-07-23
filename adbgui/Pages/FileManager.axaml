@@ -29,20 +29,20 @@
             </ListBox.Styles>
             <ListBox.ItemTemplate>
                 <DataTemplate x:DataType="models:FileSystemItem">
-                    <Grid Height="55"
-                          Background="Transparent"
+                    <Grid Background="Transparent"
+                          Margin="0,5,0,5"
                           DoubleTapped="OnElementDoubleTapped">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
                         <i:Icon Value="{Binding Converter={StaticResource FileSystemItemIconConverter}}" Margin="0,0,10,0"
                                 FontSize="20"/>
 
-                        <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
-                            <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
-                        </StackPanel>
+                        <TextBlock Grid.Column="1" Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
+                        <TextBlock Grid.Column="2" Text="{Binding Size}" />
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -63,6 +64,7 @@ public partial class PackageOperations : BaseDialog
             return;
 
         _running = true;
+        var result = true;
         foreach (var pkg in PackageNames) {
             if (token.IsCancellationRequested) {
                 _log.AppendLine("User aborted");
@@ -100,13 +102,20 @@ public partial class PackageOperations : BaseDialog
                 if (!string.IsNullOrEmpty(res.Error))
                     _log.AppendLine(res.Error);
 
+                if (result && !res.Result)
+                    result = false;
                 _log.AppendLine(res.Result ? "SUCCESS" : "FAILED");
                 _log.AppendLine();
                 UpdateLog();
             }
         }
 
-        Dispatcher.UIThread.Post(() => { TxtButtonText.Text = Localizer.Localizer.Instance["Close"]; });
+        Dispatcher.UIThread.Post(() =>
+        {
+            TxtButtonText.Text = Localizer.Localizer.Instance["Close"];
+            Button.Classes.Remove("Danger");
+            Button.Classes.Add(result ? "Success" : "Warning");
+        });
         _running = false;
     }
 

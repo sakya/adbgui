@@ -124,7 +124,7 @@
                  SelectionChanged="OnListSelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate x:DataType="models:Package">
-                    <Grid Height="55">
+                    <Grid Margin="0,5,0,5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />

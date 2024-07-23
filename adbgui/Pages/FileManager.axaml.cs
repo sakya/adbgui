@@ -21,6 +21,7 @@ public partial class FileManager : BasePage
         InitializeComponent();
 
         _currentPath = "/";
+        _previousPath = string.Empty;
         PageTitle = Localizer.Localizer.Instance["FileManager"];
     }
 
@@ -67,7 +68,7 @@ public partial class FileManager : BasePage
         if (part2 == ".")
             return part1;
         if (part2 == "..") {
-            // To up one level
+            // Go up one level
             if (part1.EndsWith("/"))
                 part1 = part1.Remove(part1.Length - 1);
             var idx = part1.LastIndexOf("/", StringComparison.InvariantCultureIgnoreCase);

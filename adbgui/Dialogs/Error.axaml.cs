@@ -9,6 +9,11 @@ namespace adbgui.Dialogs;
 
 public partial class Error : BaseDialog
 {
+    public Error()
+    {
+        Exception = new Exception();
+    }
+
     public Error(Exception exception)
     {
         Exception = exception;

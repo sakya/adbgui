@@ -69,6 +69,11 @@ public partial class InstallApk : BaseDialog
             UpdateLog();
         }
 
+        if (_tokenSource != null) {
+            _tokenSource.Dispose();
+            _tokenSource = null;
+        }
+
         Dispatcher.UIThread.Post(() =>
         {
             TxtButtonText.Text = Localizer.Localizer.Instance["Close"];

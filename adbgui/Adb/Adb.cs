@@ -261,7 +261,8 @@ public partial class Adb
         if (string.IsNullOrEmpty(deviceId))
             throw new ArgumentNullException(nameof(deviceId));
 
-        var cmdRes = await RunCommand($"-s {deviceId} shell cmd package disable {packageName}");
+        //var cmdRes = await RunCommand($"-s {deviceId} shell cmd package disable {packageName}");
+        var cmdRes = await RunCommand($"-s {deviceId} shell pm disable-user --user 0 {packageName}");
 
         return new PackageOperationResult()
         {

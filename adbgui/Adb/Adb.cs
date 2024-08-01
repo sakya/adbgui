@@ -255,14 +255,19 @@ public partial class Adb
     /// </summary>
     /// <param name="deviceId">The device id</param>
     /// <param name="packageName">The package name to disable</param>
+    /// <param name="user">The user id</param>
     /// <returns></returns>
-    public async Task<PackageOperationResult> DisablePackage(string? deviceId, string packageName)
+    public async Task<PackageOperationResult> DisablePackage(string? deviceId, string packageName, int? user = null)
     {
         if (string.IsNullOrEmpty(deviceId))
             throw new ArgumentNullException(nameof(deviceId));
 
-        //var cmdRes = await RunCommand($"-s {deviceId} shell cmd package disable {packageName}");
-        var cmdRes = await RunCommand($"-s {deviceId} shell pm disable-user --user 0 {packageName}");
+        CommandResult cmdRes;
+        if (user.HasValue) {
+            cmdRes = await RunCommand($"-s {deviceId} shell pm disable-user --user {user} {packageName}");
+        } else {
+            cmdRes = await RunCommand($"-s {deviceId} shell cmd package disable {packageName}");
+        }
 
         return new PackageOperationResult()
         {

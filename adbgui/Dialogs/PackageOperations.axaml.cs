@@ -86,7 +86,7 @@ public partial class PackageOperations : BaseDialog
                 case Operations.Disable:
                     _log.AppendLine($"Disabling {pkg}");
                     UpdateLog();
-                    res = await Adb.Adb.Instance!.DisablePackage(App.SelectedDevice!.Id, pkg);
+                    res = await Adb.Adb.Instance!.DisablePackage(App.SelectedDevice!.Id, pkg, 0);
                     break;
                 case Operations.Uninstall:
                     _log.AppendLine($"Uninstalling {pkg}");

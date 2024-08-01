@@ -10,6 +10,7 @@
              x:Class="adbgui.Pages.FileManager">
     <UserControl.Resources>
         <converters:FileSystemItemIconConverter x:Key="FileSystemItemIconConverter"/>
+        <converters:FileSizeConverter x:Key="FileSizeConverter"/>
     </UserControl.Resources>
 
     <Grid>
@@ -42,7 +43,7 @@
                                 FontSize="20"/>
 
                         <TextBlock Grid.Column="1" Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
-                        <TextBlock Grid.Column="2" Text="{Binding Size}" />
+                        <TextBlock Grid.Column="2" Text="{Binding Size, Converter={StaticResource FileSizeConverter}}" />
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

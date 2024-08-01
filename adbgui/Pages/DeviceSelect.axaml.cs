@@ -32,6 +32,7 @@ public partial class DeviceSelect : BasePage
 
     private async void OnRefreshClick(object? sender, RoutedEventArgs e)
     {
+        Spinner.IsVisible = true;
         RefreshBtn.IsEnabled = false;
         List.ItemsSource = null;
         OkBtn.IsEnabled = false;
@@ -44,6 +45,7 @@ public partial class DeviceSelect : BasePage
         }
 
         RefreshBtn.IsEnabled = true;
+        Spinner.IsVisible = false;
     }
 
     private void OnListSelectionChanged(object? sender, SelectionChangedEventArgs e)

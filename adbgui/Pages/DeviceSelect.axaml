@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:i18n="clr-namespace:adbgui.Localizer"
+             xmlns:controls="clr-namespace:adbgui.Controls"
              xmlns:models="clr-namespace:adbgui.Adb.Models"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="adbgui.Pages.DeviceSelect">
@@ -41,6 +42,11 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+
+        <controls:Spinner Grid.Row="2" Name="Spinner"
+                          IsVisible="False"
+                          VerticalAlignment="Center"
+                          HorizontalAlignment="Center"/>
 
         <Button Grid.Row="3" Name="OkBtn"
                 HorizontalAlignment="Stretch"
